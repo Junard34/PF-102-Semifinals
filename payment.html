@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&display=swap"
+      rel="stylesheet"
+    />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Payment</title>
+    <style>
+      body {
+        font-family: "Cinzel", serif;
+        font-optical-sizing: auto;
+        font-weight: weight;
+        font-style: normal;
+        background-color: #3a668faf;
+        margin: 30px;
+        padding: 20px;
+        background-image: url("berbenz.jpg");
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-blend-mode: overlay;
+      }
+
+      .payment-container {
+        max-width: 700px;
+        margin: 0 auto;
+        background: #fff;
+        padding: 25px;
+        border-radius: 8px;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        opacity: 0;
+        transform: scale(0.4);
+        animation: popUp 0.4s forwards;
+      }
+
+      h1 {
+        text-align: center;
+        color: #3a668faf;
+        margin-bottom: 20px;
+      }
+
+      .section {
+        margin-top: 20px;
+      }
+
+      .section h3 {
+        margin-bottom: 10px;
+      }
+
+      .option {
+        display: flex;
+        align-items: center;
+        margin-bottom: 8px;
+      }
+
+      .option input {
+        margin-right: 10px;
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+      }
+
+      input[type="text"] {
+        width: 100%;
+        padding: 10px;
+        font-size: 1rem;
+        margin-top: 5px;
+        box-sizing: border-box;
+      }
+
+      .order-item {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 0;
+        border-bottom: 1px solid #ddd;
+      }
+
+      .order-item span {
+        flex: 1;
+        text-align: center;
+      }
+
+      .order-item span:first-child {
+        text-align: left;
+      }
+
+      .total {
+        margin-top: 20px;
+        font-weight: bold;
+        font-size: 1.2rem;
+        text-align: right;
+        color: #3a668faf;
+      }
+
+      .btn-container {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        margin-top: 30px;
+      }
+
+      .btn {
+        flex: 1;
+        padding: 12px;
+        font-size: 1rem;
+        background-color: #3a668faf;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s, transform 0.2s ease;
+      }
+
+      .btn:hover {
+        background-color:#3a668faf;
+        transform: scale(1.05);
+      }
+
+      .pay-btn {
+        background-color: #27ae60;
+        cursor: pointer;
+        transition: background-color 0.3s, transform 0.2s ease;
+      }
+
+      .pay-btn:hover {
+        background-color: #2ecc71;
+        transform: scale(1.05);
+      }
+
+      .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        overflow: auto;
+        padding-top: 60px;
+        animation: popUpModal 0.4s ease-out forwards;
+      }
+
+      .modal-content {
+        background-color: white;
+        margin: 5% auto;
+        padding: 20px;
+        border-radius: 5px;
+        width: 80%;
+        max-width: 500px;
+        text-align: center;
+      }
+
+      .modal-content h2 {
+        margin-bottom: 20px;
+      }
+
+      .modal-content p {
+        font-size: 1.2rem;
+      }
+
+      .modal-content .btn {
+        margin-top: 20px;
+      }
+
+      @keyframes popUp {
+        from {
+          opacity: 0;
+          transform: scale(0.4);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+
+      @keyframes popUpModal {
+        from {
+          opacity: 0;
+          transform: translateY(-50px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="payment-container" id="paymentForm">
+      <h1>Payment</h1>
+
+      <div class="form-group">
+        <label for="userName"><strong>Enter your first name:</strong></label>
+        <input type="text" id="userName" placeholder="First name only" />
+      </div>
+
+      <div id="order-list"></div>
+      <div class="total" id="total-price"></div>
+
+      <div class="section">
+        <h3>Select Order Type:</h3>
+        <div class="option">
+          <input type="radio" id="dinein" name="orderType" value="Dine In" />
+          <label for="dinein">Dine In</label>
+        </div>
+        <div class="option">
+          <input type="radio" id="takeout" name="orderType" value="Take Out" />
+          <label for="takeout">Take Out</label>
+        </div>
+      </div>
+
+      <div class="section">
+        <h3>Select Payment Method:</h3>
+        <div class="option">
+          <input type="radio" id="gcash" name="payment" value="Gcash" />
+          <label for="gcash">Gcash</label>
+        </div>
+        <div class="option">
+          <input type="radio" id="card" name="payment" value="Card/Debit" />
+          <label for="card">Card/Debit</label>
+        </div>
+        <div class="option">
+          <input type="radio" id="cash" name="payment" value="Cash" />
+          <label for="cash">Cash</label>
+        </div>
+      </div>
+
+      <div class="btn-container">
+        <button class="btn" onclick="goBack()">Back</button>
+        <button class="btn pay-btn" onclick="pay()">Pay</button>
+      </div>
+    </div>
+
+    <div id="successModal" class="modal">
+      <div class="modal-content">
+        <h2>Payment Successful!</h2>
+        <p id="paymentDetails"></p>
+        <button class="btn" onclick="closeModal()">Close</button>
+      </div>
+    </div>
+
+    <script>
+      const orders = JSON.parse(localStorage.getItem("orders")) || [];
+      const orderListEl = document.getElementById("order-list");
+      const totalPriceEl = document.getElementById("total-price");
+
+      let total = 0;
+
+      if (orders.length === 0) {
+        orderListEl.innerHTML = "<p>No items in your order.</p>";
+      } else {
+        orders.forEach((order) => {
+          const itemEl = document.createElement("div");
+          itemEl.className = "order-item";
+          itemEl.innerHTML = ` 
+          <span>${order.item}</span> 
+          <span>${order.quantity}</span> 
+          <span>₱${order.price.toFixed(2)}</span> 
+        `;
+          orderListEl.appendChild(itemEl);
+          total += order.quantity * order.price;
+        });
+
+        totalPriceEl.textContent = `Total: ₱${total.toFixed(2)}`;
+      }
+
+      function goBack() {
+        window.location.href = "vieworders.html";
+      }
+
+      function pay() {
+        const userName = document.getElementById("userName").value.trim();
+        const paymentMethod = document.querySelector(
+          'input[name="payment"]:checked'
+        );
+        const orderType = document.querySelector(
+          'input[name="orderType"]:checked'
+        );
+
+        if (userName === "") {
+          alert("Please enter your first name before proceeding to payment.");
+          return;
+        }
+
+        if (!orderType) {
+          alert("Please select an order type (Dine In or Take Out).");
+          return;
+        }
+
+        if (!paymentMethod) {
+          alert("Please select a payment method.");
+          return;
+        }
+
+        const paymentDetails = `
+    <p><strong>Name:</strong> ${userName}</p>
+    <p><strong>Order Type:</strong> ${orderType.value}</p>
+    <p><strong>Payment Method:</strong> ${paymentMethod.value}</p>
+    <p><strong>Thank you for your purchase! Please proceed to the cashier to claim your receipt.</strong></p>
+  `;
+
+        document.getElementById("paymentDetails").innerHTML = paymentDetails;
+        document.getElementById("successModal").style.display = "block";
+        localStorage.removeItem("orders");
+      }
+      function closeModal() {
+        document.getElementById("successModal").style.display = "none";
+        window.location.href = "homepage.html";
+      }
+    </script>
+  </body>
+</html>

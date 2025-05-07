@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&display=swap"
+      rel="stylesheet"
+    />
+    <meta charset="UTF-8" />
+    <title>Restaurant Homepage</title>
+    <style>
+      @keyframes popIn {
+        0% {
+          opacity: 0;
+          transform: scale(0.8);
+        }
+        100% {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 20px;
+        background: #3a668faf;
+        background-image: url("berbenz.jpg");
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-blend-mode: overlay;
+      }
+
+      header {
+        background-color: #f8f8f8;
+        color: #3a668faf;
+        padding: 20px;
+        text-align: center;
+        border-radius: 10px;
+        margin: 40px;
+        animation: popIn 0.3s ease-out forwards;
+        font-family: "Cinzel", serif;
+        font-optical-sizing: auto;
+        font-weight: weight;
+        font-style: normal;
+      }
+
+      h3 {
+        color: black;
+        text-align: center;
+        background-color: #f8f8f8;
+        padding: 20px;
+        margin-left: 40%;
+        margin-right: 40%;
+        border-radius: 10px;
+        animation: popIn 0.3s ease-out forwards;
+        font-family: "Cinzel", serif;
+        font-optical-sizing: auto;
+        font-weight: weight;
+        font-style: normal;
+      }
+
+      .features {
+        display: flex;
+        justify-content: space-around;
+        margin-top: 100px;
+      }
+
+      .feature {
+        background: white;
+        padding: 20px;
+        width: 40%;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        animation: popIn 0.3s ease-out forwards;
+        font-family: "Cinzel", serif;
+        font-optical-sizing: auto;
+        font-weight: weight;
+        font-style: normal;
+      }
+
+      .feature h2 {
+        color: #3a668faf;
+      }
+
+      .feature button {
+        margin-top: 20px;
+        padding: 10px 20px;
+        background-color: #3a668faf;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background-color 0.3s, transform 0.2s ease;
+      }
+
+      .feature button:hover {
+        background-color: #e67e22;
+        transform: scale(1.05);
+      }
+
+      .order-history {
+        margin-top: 50px;
+        text-align: center;
+      }
+
+      .order-history p {
+        font-size: 1.2rem;
+        color: #333;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>WELCOME TO BerBen'z Snackhouse</h1>
+    </header>
+
+
+
+    <div class="features">
+      <div class="feature">
+        <button onclick="startOrder('dine')">Order Dine In</button>
+      </div>
+      <div class="feature">
+      
+        <button onclick="startOrder('takeout')">Order Take Out</button>
+      </div>
+    </div>
+
+    <script>
+      function startOrder(type) {
+        window.location.href = "menu.html";
+      }
+    </script>
+  </body>
+</html>

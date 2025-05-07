@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&display=swap"
+      rel="stylesheet"
+    />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>View Orders</title>
+    <style>
+      body {
+        font-family: "Cinzel", serif;
+        font-optical-sizing: auto;
+        font-weight: weight;
+        font-style: normal;
+        background-color: #3a668faf;
+        margin: 30px;
+        padding: 20px;
+        background-image: url("berbenz.jpg");
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-blend-mode: overlay;
+      }
+
+      .order-container {
+        max-width: 700px;
+        margin: 0 auto;
+        background: #fff;
+        padding: 25px;
+        border-radius: 8px;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        transform: scale(0.7);
+        opacity: 0;
+        transition: transform 0.4s ease, opacity 0.4s ease;
+        z-index: 1001;
+        position: relative;
+      }
+
+      .order-container.show {
+        transform: scale(1);
+        opacity: 1;
+      }
+
+      #overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.4);
+        opacity: 0;
+        z-index: 1000;
+        pointer-events: none;
+        transition: opacity 0.4s ease;
+      }
+
+      #overlay.show {
+        opacity: 1;
+        pointer-events: all;
+      }
+
+      h1 {
+        text-align: center;
+        color: #3a668faf;
+        margin-bottom: 20px;
+      }
+
+      .order-item {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 0;
+        border-bottom: 1px solid #ddd;
+      }
+
+      .order-item span {
+        flex: 1;
+        text-align: center;
+      }
+
+      .order-item span:first-child {
+        text-align: left;
+      }
+
+      .total {
+        margin-top: 20px;
+        font-weight: bold;
+        font-size: 1.2rem;
+        text-align: right;
+        color: #3a668faf;
+      }
+
+      .btn-container {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        margin-top: 30px;
+      }
+
+      .btn {
+        flex: 1;
+        padding: 12px;
+        font-size: 1rem;
+        background-color: #3a668faf;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s, transform 0.2s ease;
+      }
+
+      .btn:hover {
+        background-color: #3a668faf;
+        transform: scale(1.05);
+      }
+
+      .minus-btn,
+      .plus-btn {
+        background-color: #3a668faf;
+        padding: 5px 10px;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s, transform 0.2s ease;
+      }
+
+      .plus-btn {
+        background-color: #2ecc71;
+        cursor: pointer;
+        transition: background-color 0.3s, transform 0.2s ease;
+      }
+
+      .minus-btn:hover {
+        background-color: #3a668faf;
+        transform: scale(1.05);
+      }
+
+      .plus-btn:hover {
+        background-color: #27ae60;
+        transform: scale(1.05);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="overlay"></div>
+
+    <div class="order-container" id="order-container">
+      <h1>SUMMARY OF YOUR ORDER/s</h1>
+      <div id="order-list"></div>
+      <div class="total" id="total-price"></div>
+
+      <div class="btn-container">
+        <button class="btn" onclick="goBack()">Back</button>
+        <button class="btn" onclick="goToPayment()">Go to Payment</button>
+      </div>
+    </div>
+
+    <audio id="popupSound" src="pop.mp3" preload="auto"></audio>
+
+    <script>
+      const orders = JSON.parse(localStorage.getItem("orders")) || [];
+      const orderListEl = document.getElementById("order-list");
+      const totalPriceEl = document.getElementById("total-price");
+
+      function renderOrders() {
+        orderListEl.innerHTML = "";
+        let total = 0;
+
+        if (orders.length === 0) {
+          orderListEl.innerHTML = "<p>No items in your order.</p>";
+          totalPriceEl.textContent = "";
+          return;
+        }
+
+        const header = document.createElement("div");
+        header.className = "order-item";
+        header.innerHTML = `
+        <span>Item</span>
+        <span>Quantity</span>
+        <span>Price</span>
+        <span></span>
+      `;
+        orderListEl.appendChild(header);
+
+        orders.forEach((order, index) => {
+          const itemEl = document.createElement("div");
+          itemEl.className = "order-item";
+          itemEl.innerHTML = `
+          <span>${order.item}</span>
+          <span>${order.quantity}</span>
+          <span>₱${order.price.toFixed(2)}</span>
+          <span>
+            <button class="minus-btn" onclick="decreaseQuantity(${index})">-</button>
+            <button class="plus-btn" onclick="increaseQuantity(${index})">+</button>
+          </span>
+        `;
+          orderListEl.appendChild(itemEl);
+          total += order.quantity * order.price;
+        });
+
+        totalPriceEl.textContent = `Total: ₱${total.toFixed(2)}`;
+      }
+
+      function decreaseQuantity(index) {
+        if (orders[index].quantity > 1) {
+          orders[index].quantity -= 1;
+        } else {
+          orders.splice(index, 1);
+        }
+        localStorage.setItem("orders", JSON.stringify(orders));
+        renderOrders();
+      }
+
+      function increaseQuantity(index) {
+        orders[index].quantity += 1;
+        localStorage.setItem("orders", JSON.stringify(orders));
+        renderOrders();
+      }
+
+      function goBack() {
+        window.location.href = "menu.html";
+      }
+
+      function goToPayment() {
+        window.location.href = "payment.html";
+      }
+
+      window.addEventListener("load", () => {
+        const container = document.getElementById("order-container");
+        const overlay = document.getElementById("overlay");
+        const sound = document.getElementById("popupSound");
+
+        container.classList.add("show");
+        overlay.classList.add("show");
+        sound.play();
+
+        renderOrders();
+      });
+    </script>
+  </body>
+</html>

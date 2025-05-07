@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&display=swap"
+      rel="stylesheet"
+    />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Menu</title>
+    <style>
+      @keyframes fadeSlideIn {
+        from {
+          opacity: 0;
+          transform: scale(0.9) translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1) translateY(0);
+        }
+      }
+
+      body {
+        font-family: "Cinzel", serif;
+        font-optical-sizing: auto;
+        font-weight: weight;
+        font-style: normal;
+        margin: 0;
+        padding: 20px;
+        background-color: #3a668faf;
+        margin: 10px;
+        background-image: url("berbenz.jpg");
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-blend-mode: overlay;
+        animation: popIn 0.3s ease-out forwards;
+      }
+
+      .menu-container {
+        max-width: 1500px;
+        margin: 0 auto;
+        background: #fff;
+        padding: 55px;
+        border-radius: 8px;
+        box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
+        animation: fadeSlideIn 0.5s ease-out;
+      }
+
+      .menu-columns {
+        display: flex;
+        justify-content: space-between;
+        gap: 15px;
+      }
+
+      .column {
+        flex: 1;
+      }
+
+      .column h2 {
+        text-align: center;
+        color: #3a668faf;
+        border-bottom: 2px solid #3a668faf;
+        padding-bottom: 5px;
+        margin-bottom: 15px;
+      }
+
+      .column .grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 15px;
+      }
+
+      .column.meals .grid {
+        grid-template-rows: repeat(3, auto);
+      }
+
+      @keyframes popUp {
+        0% {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .item {
+        text-align: center;
+        margin-bottom: 20px;
+        opacity: 0;
+        transform: translateY(20px);
+        animation: popUp 0.4s ease-out forwards;
+      }
+
+      .item:nth-child(odd) {
+        animation-delay: 0.1s;
+      }
+
+      .item:nth-child(even) {
+        animation-delay: 0.3s;
+      }
+
+      .item img {
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+      }
+
+      .item-label {
+        margin-top: 8px;
+        font-weight: bold;
+      }
+
+      .add-btn {
+        margin-top: 8px;
+        padding: 5px 10px;
+        background-color: #3a668faf;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s, transform 0.2s ease;
+      }
+
+      .add-btn:hover {
+        background-color: #3a668faf;
+        transform: scale(1.05);
+      }
+
+      .order-summary {
+        margin-top: 5px;
+        font-size: 0.9rem;
+        color: #555;
+      }
+
+      .btn-container {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 30px;
+      }
+
+      .btn {
+        width: 48%;
+        padding: 15px;
+        font-size: 1rem;
+        font-weight: bold;
+        color: white;
+        background-color: #3a668faf;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s, transform 0.2s ease;
+      }
+
+      .btn.back {
+        background-color: #3a668faf;
+        cursor: pointer;
+        transition: background-color 0.3s, transform 0.2s ease;
+      }
+
+      .btn.back:hover {
+        background-color: #3a668faf;
+        transform: scale(1.05);
+      }
+      .btn:hover {
+        background-color: #3a668faf;
+        transform: scale(1.05);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="menu-container">
+      <div class="menu-columns">
+        <div class="column meals">
+          <h2>MEALS</h2>
+          <div class="grid">
+            <div class="item" id="hamsilog">
+              <img src="hamsilog.jpg" alt="Hamsilog" />
+              <div class="item-label">Hamsilog<br /><span>₱50.00</span></div>
+              <button class="add-btn" onclick="addToOrder('Hamsilog', 50, this)">
+                Add
+              </button>
+              <div class="order-summary">Quantity: 0</div>
+            </div>
+            <div class="item" id="hotdog">
+              <img src="hotsilog.jpg" alt="Hotdog" />
+              <div class="item-label">
+                  Hotdog<br /><span>₱50.00</span>
+              </div>
+              <button
+                class="add-btn"
+                onclick="addToOrder('Hotdog', 50, this)"
+              >
+                Add
+              </button>
+              <div class="order-summary">Quantity: 0</div>
+            </div>
+            <div class="item" id="cornsilog">
+              <img src="cornsilog - Copy - Copy.jpg" alt="Cornsilog" />
+              <div class="item-label">Cornsilog<br /><span>₱50.00</span></div>
+              <button
+                class="add-btn"
+                onclick="addToOrder('Cornsilog', 50, this)"
+              >
+                Add
+              </button>
+              <div class="order-summary">Quantity: 0</div>
+            </div>
+            <div class="item" id="porksilog">
+              <img src="porksilog.jpg" alt="Porksilog" />
+              <div class="item-label">
+                  Porksilog<br /><span>₱50.00</span>
+              </div>
+              <button
+                class="add-btn"
+                onclick="addToOrder('Porksilog', 50, this)"
+              >
+                Add
+              </button>
+              <div class="order-summary">Quantity: 0</div>
+            </div>
+            <div class="item" id="tosilog">
+              <img src="tosilog.jpg" alt="Tosilog" />
+              <div class="item-label">
+                Tosilog<br /><span>₱50.00</span>
+              </div>
+              <button
+                class="add-btn"
+                onclick="addToOrder('Tosilog', 50, this)"
+              >
+                Add
+              </button>
+              <div class="order-summary">Quantity: 0</div>
+            </div>
+            <div class="item" id="longsilog">
+              <img src="longsilog.jpg" alt="Longsilog" />
+              <div class="item-label">
+                Longsilog<br /><span>₱50.00</span>
+              </div>
+              <button
+                class="add-btn"
+                onclick="addToOrder('Longsilog', 50, this)"
+              >
+                Add
+              </button>
+              <div class="order-summary">Quantity: 0</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="column">
+          <h2>SNACKS</h2>
+          <div class="grid">
+            <div class="item" id="beef siomai">
+              <img src="beef.jpg" alt="Beef Siomai" />
+              <div class="item-label">Beef Siomai<br /><span>₱20.00</span></div>
+              <button
+                class="add-btn"
+                onclick="addToOrder('Beef Siomai', 20, this)"
+              >
+                Add
+              </button>
+              <div class="order-summary">Quantity: 0</div>
+            </div>
+            <div class="item" id="porksiomai">
+              <img src="porksiomai.jpg" alt="Porksiomai" />
+              <div class="item-label">Porksiomai<br /><span>₱20.00</span></div>
+              <button class="add-btn" onclick="addToOrder('Pork Siomai', 20, this)">
+                Add
+              </button>
+              <div class="order-summary">Quantity: 0</div>
+            </div>
+            <div class="item" id="japanese siomai">
+              <img src="japanesse.jpg" alt="Japanese Siomai" />
+              <div class="item-label">Japanese Siomai<br /><span>₱20.00</span></div>
+              <button
+                class="add-btn"
+                onclick="addToOrder('Japanese Siomai', 20, this)"
+              >
+                Add
+              </button>
+              <div class="order-summary">Quantity: 0</div>
+            </div>
+            <div class="item" id="kwek kwek">
+              <img src="kwek-kwek-14.jpg" alt="Kwek Kwek" />
+              <div class="item-label">Kwek Kwek<br /><span>₱20.00</span></div>
+              <button class="add-btn" onclick="addToOrder('Kwek Kwek', 20, this)">
+                Add
+              </button>
+              <div class="order-summary">Quantity: 0</div>
+            </div>
+            <div class="item" id="tempura">
+              <img src="tempura.jpg" alt="Tempura" />
+              <div class="item-label">Tempura<br /><span>₱20.00</span></div>
+              <button class="add-btn" onclick="addToOrder('Tempura', 20, this)">
+                Add
+              </button>
+              <div class="order-summary">Quantity: 0</div>
+            </div>
+            <div class="item" id="squid roll">
+              <img src="squidroll.jpg" alt="Squid Roll" />
+              <div class="item-label">Squid Roll<br /><span>₱25.00</span></div>
+              <button class="add-btn" onclick="addToOrder('Squid Roll', 25, this)">
+                Add
+              </button>
+              <div class="order-summary">Quantity: 0</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="column">
+          <h2>DRINKS</h2>
+          <div class="grid">
+            <div class="item" id="pepsi">
+              <img src="pepsi.jpg" alt="Pepsi" />
+              <div class="item-label">
+                Pepsi<br /><span>₱20.00</span>
+              </div>
+              <button
+                class="add-btn"
+                onclick="addToOrder('Pepsi', 20, this)"
+              >
+                Add
+              </button>
+              <div class="order-summary">Quantity: 0</div>
+            </div>
+            <div class="item" id="buko juice">
+              <img src="buko.jpg" alt="Buko Juice" />
+              <div class="item-label">
+                Buko Juice<br /><span>₱15.00</span>
+              </div>
+              <button
+                class="add-btn"
+                onclick="addToOrder('Buko Juice', 15, this)"
+              >
+                Add
+              </button>
+              <div class="order-summary">Quantity: 0</div>
+            </div>
+            <div class="item" id="water">
+              <img src="WATER.jpg" alt="Water" />
+              <div class="item-label">Water<br /><span>₱20.00</span></div>
+              <button
+                class="add-btn"
+                onclick="addToOrder('Water', 15, this)"
+              >
+                Add
+              </button>
+              <div class="order-summary">Quantity: 0</div>
+            </div>
+            <div class="item" id="sprite">
+              <img src="sprite.jpg" alt="Sprite" />
+              <div class="item-label">Sprite<br /><span>₱20.00</span></div>
+              <button
+                class="add-btn"Ice
+                onclick="addToOrder('Sprite', 20, this)"
+              >
+                Add
+              </button>
+              <div class="order-summary">Quantity: 0</div>
+            </div>
+            <div class="item" id="coke">
+              <img src="coke.jpg" alt="Coke" />
+              <div class="item-label">Coke<br /><span>₱20.00</span></div>
+              <button
+                class="add-btn"
+                onclick="addToOrder('Coke', 20, this)"
+              >
+                Add
+              </button>
+              <div class="order-summary">Quantity: 0</div>
+            </div>
+            <div class="item" id="royal">
+              <img src="royal.jpg" alt="Royal" />
+              <div class="item-label">
+              Royal<br /><span>₱20.00</span>
+              </div>
+              <button
+                class="add-btn"
+                onclick="addToOrder('Royal', 20, this)"
+              >
+                Add
+              </button>
+              <div class="order-summary">Quantity: 0</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="btn-container">
+        <button class="btn back" onclick="goBack()">BACK</button>
+        <button class="btn" onclick="doneOrdering()">VIEW ORDER/s</button>
+      </div>
+    </div>
+
+    <script>
+      let orderList = JSON.parse(localStorage.getItem("orders")) || [];
+      window.onload = function () {
+        updateQuantities();
+      };
+
+      function goBack() {
+        localStorage.removeItem("orders");
+        window.location.href = "homepage.html";
+      }
+
+      function addToOrder(itemName, price, btnElement) {
+        const summaryEl = btnElement.nextElementSibling;
+
+        const existing = orderList.find((item) => item.item === itemName);
+        if (existing) {
+          existing.quantity += 1;
+        } else {
+          orderList.push({ item: itemName, quantity: 1, price: price });
+        }
+
+        localStorage.setItem("orders", JSON.stringify(orderList));
+
+        const totalQty =
+          orderList.find((item) => item.item === itemName)?.quantity || 0;
+        summaryEl.textContent = `Quantity: ${totalQty}`;
+
+        updateQuantities();
+      }
+
+      function doneOrdering() {
+        if (orderList.length === 0) {
+          alert("Please add an item first to proceed to view orders.");
+        } else {
+          window.location.href = "vieworders.html";
+        }
+      }
+
+      function updateQuantities() {
+        orderList.forEach((order) => {
+          const itemElement = document.getElementById(
+            order.item.toLowerCase().replace(/\s+/g, "")
+          );
+          if (itemElement) {
+            const orderSummary = itemElement.querySelector(".order-summary");
+            orderSummary.textContent = `Quantity: ${order.quantity}`;
+          }
+        });
+      }
+
+      function goBack() {
+        localStorage.removeItem("orders");
+        window.location.href = "homepage.html";
+      }
+    </script>
+  </body>
+</html>
